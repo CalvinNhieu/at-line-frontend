@@ -30,9 +30,9 @@ persistStore(
     blacklist: ['playerCount', 'countdownTime', 'question', 'answer', 'choices', 'timeUp'],
   },
   () => {
-    store.dispatch(appReady());
+    // store.dispatch(appReady());
   },
-);
+).purgeAll();
 
 // Provider provides the store to all child components
 class AtLine extends Component {

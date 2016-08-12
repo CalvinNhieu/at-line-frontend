@@ -10,13 +10,14 @@ export default connect(
       answer: state.answer,
       choices: state.choices,
       choice: state.choice,
-      countdownTime: 10,
+      countdownTime: 7,
     };
   },
   (dispatch) => {
     return {
       countdown: function(time) {
-        return dispatch(countdown(time, () => dispatch(getResults())));
+        // return dispatch(countdown(time, () => dispatch(getResults())));
+        return dispatch(countdown(time, () => Actions.leaderboard()));
       },
       pickChoice: function(choice) {
         return dispatch(pickChoice(choice));

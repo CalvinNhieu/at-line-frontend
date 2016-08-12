@@ -12,6 +12,8 @@ import {
   PICK_CHOICE_FAIL,
   SET_ANSWER,
   GET_RESULTS_FAIL,
+  JOIN_SUCCESS,
+  ADD_PLAYER
 } from './actionTypes';
 import { Actions } from 'react-native-router-flux';
 
@@ -25,7 +27,7 @@ export function appReady() {
       dispatch(createPlayer());
     }
     dispatch(generateName());
-    Actions.home();
+    // Actions.home();
   };
 }
 
@@ -34,27 +36,24 @@ export function createPlayer() {
     // hit create player endpoint
     // on success: set player id
     console.log("In create player");
-      let state = getState();
-      let url = 'https://fast-headland-47604.herokuapp.com/create_player';
+    let state = getState();
+    let url = 'http://10.5.5.16:8000/create_player/';
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-        console.log("Got res",res);
-          return res.json();
-      })
-      .then((json) => {
-        console.log("Json Response ");
-        let player_id = json[0]['pk'];
-
-        dispatch(createPlayerSuccess(player_id));
-      })
-      .catch(err => console.log(err));
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => {
+      console.log("Got res",res);
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(createPlayerSuccess(json.id));
+    })
+    .catch(err => console.log(err));
   };
 }
 
@@ -84,25 +83,54 @@ export function generateName() {
 // This is where we will hit the 'join game' endpoint
 export function join() {
   return function(dispatch, getState) {
-    console.log('hey you\'re in a thunk!');
-    // hit endpoint
-    // on success, do nothing?? all server side...
+    console.log('joining');
+    let state = getState();
+    let url = 'http://10.5.5.16:8000/join/';
+
+    // fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     game_id: state.gameId,
+    //     player_id: state.id,
+    //   }),
+    // })
+    // .then((res) => {
+    //   console.log("Got res",res);
+    //   return res.json();
+    // })
+    // .then((json) => {
+    //   console.log(data);
+    //   dispatch(joinSuccess(data));
+    //   Actions.lobby();
+    // })
+    // .catch(err => console.log(err));
+    Actions.lobby();
+
+  };
+}
+
+export function joinSuccess(data) {
+  return {
+    type: JOIN_SUCCESS,
+    sessionId: data.id,
+    playerCount: data.players.length,
   };
 }
 
 export function pollLobby() {
   return function(dispatch, getState) {
     let state = getState();
-    let url = 'https://fast-headland-47604.herokuapp.com/session';
+    let url = 'http://10.5.5.16:8000/session/';
 
     fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {
-        'session_id': state.session_id
-      }
     })
     .then((res) =>{
       console.log("Got Res");
@@ -124,9 +152,10 @@ export function pollLobby() {
 export function pollLobbySuccess(data) {
   return function(dispatch, getState) {
     let state = getState();
-    dispatch(setPlayerCount(data['player_count']));
+    let numPlayers = data.players.length;
 
-    if (data.playerCount === state.maxPlayers ) {
+    dispatch(setPlayerCount(numPlayers));
+    if (numPlayers === state.maxPlayers ) {
       Actions.countdown();
     } else {
       dispatch(pollLobby());
@@ -167,6 +196,23 @@ export function countdown(time, callback) {
 
 export function fetchQuestion() {
   return function(dispatch, getState) {
+    let state = getState();
+    let url = 'http://10.5.5.16:8000/question/';
+
+    // fetch(url, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+    // .then((res) =>{
+    //   console.log("Got Res");
+    //   return res.json();
+    // })
+    // .then((json) => {
+    //   dispatch(fetchQuestionSuccess(json));
+    // })
+    // .catch(err => console.log(err));
     // hit questions endpoint
     // if has next question: dispatch(fetchQuestionSuccess)
   };
@@ -175,7 +221,14 @@ export function fetchQuestion() {
 export function fetchQuestionSuccess(data) {
   return {
     type: FETCH_QUESTION_SUCCESS,
-    // populate state question, answer...
+    question: data.text,
+    answer: data.answer-1,
+    choices: [
+      data.first_option,
+      data.second_option,
+      data.third_option,
+      data.fourth_option,
+    ],
   };
 }
 
@@ -193,8 +246,31 @@ export function setChoice(choice) {
 }
 
 export function pickChoice(choice) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
+    let state = getState();
+    let url = 'http://10.5.5.16:8000/answer/';
+
     dispatch(setChoice(choice));
+    // fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     session_id: state.sessionId,
+    //     player_id: state.id,
+    //     answer: choice+1,
+    //   }),
+    // })
+    // .then((res) => {
+    //   console.log("Got res",res);
+    //   return res.json();
+    // })
+    // .then((json) => {
+    //   dispatch(pickChoiceSuccess());
+    // })
+    // .catch(err => console.log(err));
     // hit answer endpoint with player's choice, nothing to handle?
   };
 }
@@ -213,6 +289,25 @@ export function pickChoiceFail() {
 
 export function getResults() {
   return function(dispatch, getState) {
+    let state = getState();
+    let url = 'http://10.5.5.16:8000/question/?session_id='+state.sessionId;
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) =>{
+      console.log("Got Res");
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(getResultsSuccess(json));
+    })
+    .catch(err => console.log(err));
+    // hit questions endpoint
+    // if has next question: dispatch(fetchQuestionSuccess)
     // hit /results/ endpoint
     // on success dispatch(getResultsSuccess())
   };
@@ -235,5 +330,11 @@ export function setAnswer(answer) {
 export function getResultsFail() {
   return {
     type: GET_RESULTS_FAIL,
+  };
+}
+
+export function addPlayer() {
+  return {
+    type: ADD_PLAYER,
   };
 }

@@ -2,6 +2,8 @@ import { COLOR_NAMES, ANIMAL_NAMES } from './constants';
 import { Actions } from 'react-native-router-flux';
 import {
   GENERATE_NAME,
+  JOIN_SUCCESS,
+  SET_PLAYER_COUNT,
   CREATE_PLAYER_SUCCESS,
   CREATE_PLAYER_FAIL,
   POLL_LOBBY_SUCCESS,
@@ -14,28 +16,30 @@ import {
   PICK_CHOICE_FAIL,
   SET_ANSWER,
   GET_RESULTS_FAIL,
+  ADD_PLAYER,
 } from './actionTypes';
 
 const initialState = {
   id: -1,
+  sessionId: 1,
   gameId: 1,
   name: '',
   playerCount: 1,
   maxPlayers: 6,
   countdownTime: 3,
-  question: 'Where is the capybara indigenous to?',
+  question: 'Where should you do your summer internship?',
   answer: -1,
-  choices: ['California', 'Canada', 'Kazhakstan', 'Atlantic Ocean'],
+  choices: ['Eventbrite', 'Slack', '', ''],
   choice: -1,
   timeUp: false,
   leaderboard: [
     {
-      name: 'Golden Capybara',
-      score: '5',
+      name: 'Hot Pink Shark',
+      score: '1',
     },
     {
-      name: 'Crimson Wolf',
-      score: '4',
+      name: 'Invisible Platypus',
+      score: '0',
     },
   ],
   prize: '',
@@ -49,6 +53,13 @@ const reducerMap = {
     return {
       ...state,
       name: color + ' ' + animal,
+    };
+  },
+  [JOIN_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      sessionId: action.sessionId,
+      playerCount: action.playerCount,
     };
   },
   [CREATE_PLAYER_SUCCESS]: (state, action) => {
@@ -86,8 +97,8 @@ const reducerMap = {
     return {
       ...state,
       question: action.question,
+      answer: action.answer,
       choices: action.choices,
-      choice: action.choice,
     };
   },
   [FETCH_QUESTION_FAIL]: (state) => {
@@ -106,6 +117,16 @@ const reducerMap = {
     };
   },
   [GET_RESULTS_FAIL]: (state) => {
+    return state;
+  },
+  [ADD_PLAYER]: (state) => {
+    if (state.playerCount < 6) {
+      let nextPlayerCount = state.playerCount+1;
+      return {
+        ...state,
+        playerCount: nextPlayerCount,
+      };
+    }
     return state;
   },
 };

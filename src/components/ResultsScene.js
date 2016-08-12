@@ -13,11 +13,12 @@ export default class ResultsScene extends Component {
 
   _result() {
     // fix this conditional
-    if (this.props.name === this.props.leaderboard[0].name) {
-      return 'You win!';
-    } else {
-      return 'You lose!';
-    }
+    return 'You win 50% off the VIP upgrade!';
+    // if (this.props.name === this.props.leaderboard[0].name) {
+    //   return 'You win 50% off the VIP upgrade!';
+    // } else {
+    //   return 'You win 50% off the VIP upgrade!';
+    // }
   }
 
   render() {

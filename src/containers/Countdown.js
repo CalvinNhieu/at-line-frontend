@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 export default connect(
   (state) => {
     return {
-      countdownTime: 5,
+      countdownTime: state.countdownTime,
     };
   },
   (dispatch) => {

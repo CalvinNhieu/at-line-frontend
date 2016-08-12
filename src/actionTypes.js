@@ -1,5 +1,7 @@
 export const GENERATE_NAME = 'GENERATE_NAME';
 
+export const JOIN_SUCCESS = 'JOIN_SUCCESS';
+
 export const CREATE_PLAYER_SUCCESS = 'CREATE_PLAYER_SUCCESS';
 export const CREATE_PLAYER_FAIL = 'CREATE_PLAYER_FAIL';
 
@@ -18,3 +20,5 @@ export const PICK_CHOICE_FAIL = 'PICK_CHOICE_FAIL';
 
 export const SET_ANSWER = 'SET_ANSWER';
 export const GET_RESULTS_FAIL = 'GET_RESULTS_FAIL';
+
+export const ADD_PLAYER = 'ADD_PLAYER';

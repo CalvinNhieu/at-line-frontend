@@ -16,8 +16,14 @@ export default class LeaderboardScene extends Component {
     let counter = 0;
 
     return this.props.leaderboard.map((choice) => {
+      let name;
+      if (counter === 0) {
+        name = this.props.name;
+      } else {
+        name = this.props.leaderboard[counter].name;
+      }
       let comp = (
-        <Text key={counter} style={styles.entry}>{this.props.leaderboard[counter].name + ': ' + this.props.leaderboard[counter].score}</Text>
+        <Text key={counter} style={styles.entry}>{name + ': ' + this.props.leaderboard[counter].score}</Text>
       );
 
       counter++;

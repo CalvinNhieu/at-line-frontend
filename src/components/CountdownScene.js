@@ -8,7 +8,7 @@ import { COLORS } from '../constants';
 
 export default class CountdownScene extends Component {
   componentDidMount() {
-    this.props.countdown(this.props.countdownTime);
+    this.props.countdown(5);
     this.props.fetchQuestion();
   }
 
@@ -16,7 +16,7 @@ export default class CountdownScene extends Component {
     return (
       <View style={styles.view}>
         <Text style={styles.label}>Starting in...</Text>
-        <Text style={styles.countdown}>{this.props.countdownTime}</Text>
+        <Text style={styles.countdown}>{this.props.countdownTime === 0 ? '5' : this.props.countdownTime}</Text>
       </View>
     );
   }

@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 export default connect(
   (state) => {
     return {
-      countdownTime: 7,
+      countdownTime: 4,
       name: state.name,
       leaderboard: state.leaderboard,
     };

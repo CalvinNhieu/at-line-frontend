@@ -10,7 +10,9 @@ import { COLORS, HEADER_HEIGHT } from '../constants';
 
 export default class LobbyScene extends Component {
   componentDidMount() {
-    this.props.pollLobby();
+    this.props.countdown(this.props.countdownTime);
+    this.props.addPlayers(this.props.addPlayerInterval);
+    // this.props.pollLobby();
   }
 
   render() {

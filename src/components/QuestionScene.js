@@ -16,7 +16,7 @@ export default class QuestionScene extends Component {
 
     return this.props.choices.map((choice) => {
       let comp = (
-        <Text key={counter} style={styles.choice} onPressed={() => this.props.pickChoice(counter)}>{this.props.choices[counter]}</Text>
+        <Text key={counter} style={this.props.choice === counter ? styles.picked : styles.choice} onPress={() => this.props.pickChoice(counter)}>{this.props.choices[counter]}</Text>
       );
 
       counter++;
@@ -44,11 +44,16 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 32,
+    textAlign: 'center',
   },
   choices: {
     marginTop: 30,
   },
   choice: {
     marginTop: 10,
+  },
+  picked: {
+    marginTop: 10,
+    color: '#FF0000',
   },
 });

@@ -49,7 +49,6 @@ const scenes = Actions.create(
     <Scene
       key='results'
       title='Results'
-      initial={true}
       component={Results}
     />
   </Scene>

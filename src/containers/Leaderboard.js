@@ -8,12 +8,13 @@ export default connect(
     return {
       countdownTime: 5,
       leaderboard: state.leaderboard,
+      name: state.name,
     };
   },
   (dispatch) => {
     return {
       countdown: function(time) {
-        return dispatch(countdown(time, () => Actions.question()));
+        return dispatch(countdown(time, () => Actions.results()));
       },
       fetchQuestion: function() {
         return dispatch(fetchQuestion());
