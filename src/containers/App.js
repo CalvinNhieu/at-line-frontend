@@ -18,6 +18,7 @@ const scenes = Actions.create(
     <Scene
       key='home'
       initial={true}
+      title='Pick a name!'
       component={Home}
     />
   </Scene>

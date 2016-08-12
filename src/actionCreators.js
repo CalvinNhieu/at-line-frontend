@@ -1,6 +1,20 @@
 import {
-  JOIN,
+  APP_READY,
+  GENERATE_NAME,
 } from './actionTypes';
+
+// simplest action creator
+export function appReady() {
+  return {
+    type: APP_READY,
+  };
+}
+
+export function generateName() {
+  return {
+    type: GENERATE_NAME,
+  };
+}
 
 // This is a thunk.
 // redux-thunk supplies store.dispatch() and store.getState()

@@ -10,11 +10,11 @@ import { Actions } from 'react-native-router-flux';
 import { COLORS } from '../constants';
 
 export default class SplashScene extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      Actions.home();
-    }, 1000);
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     Actions.home();
+  //   }, 1000);
+  // }
 
   render() {
     return (
