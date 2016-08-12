@@ -6,6 +6,7 @@ import { COLORS } from '../constants';
 import SplashScene from '../components/SplashScene';
 import Home from '../containers/Home';
 import Lobby from '../containers/Lobby';
+import Countdown from '../containers/Countdown';
 
 // Actions.create() creates navigation actions (e.g. Actions.home())
 // App's entry point is defined here with `initial` prop
@@ -23,9 +24,14 @@ const scenes = Actions.create(
     />
     <Scene
       key='lobby'
-      initial={true}
       title='Lobby'
       component={Lobby}
+    />
+    <Scene
+      key='countdown'
+      initial={true}
+      component={Countdown}
+      hideNavBar={true}
     />
   </Scene>
 );
@@ -58,6 +64,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.WHITE,
+    fontSize: 24,
   },
   backButton: {
     color: COLORS.WHITE,

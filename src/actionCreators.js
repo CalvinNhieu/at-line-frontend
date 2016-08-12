@@ -4,6 +4,7 @@ import {
   CREATE_PLAYER_FAIL,
   POLL_LOBBY_SUCCESS,
   POLL_LOBBY_FAIL,
+  SET_COUNTDOWN,
 } from './actionTypes';
 import { Actions } from 'react-native-router-flux';
 
@@ -61,23 +62,41 @@ export function join() {
 export function pollLobby() {
   return function(dispatch, getState) {
     // hit 'players in room'/'is room ready' endpoint
+    // CHECK HERE IF playerCount === maxPlayerCount to determine ready?? or use ready field
     // on success:not ready dispatch(pollLobbySuccess), dispatch(pollLobby)
-    // on success:ready dispatch(pollLobbySuccess), dispatch(startGame)
+    // on success:ready dispatch(pollLobbySuccess), Actions.countdown(), countdown(getState().countdownTime),
     // on fail: handle
   }
 }
 
-// this will receive a session, populates most of state
+// this will receive a session (isReady and playerCount??)
 export function pollLobbySuccess(data) {
   return {
     type: POLL_LOBBY_SUCCESS,
-    // parse session object into state here...
     playerCount: data.playerCount,
   };
 }
 
-export function startGame() {
-  return function() {
-    Actions.question();
-  }
+export function setCountdown(time) {
+  return {
+    type: SET_COUNTDOWN,
+    time: time,
+  };
+}
+
+export function countdown(time) {
+  return function(dispatch) {
+    if (time > 0) {
+      let nextTime = time - 1;
+
+      setTimeout(() => {
+        dispatch(setCountdown(nextTime));
+        if (nextTime > 0) {
+          dispatch(countdown(nextTime));
+        } else {
+          // Actions.question();
+        }
+      }, 1000);
+    }
+  };
 }

@@ -2,6 +2,11 @@ import { COLOR_NAMES, ANIMAL_NAMES } from './constants';
 import { Actions } from 'react-native-router-flux';
 import {
   GENERATE_NAME,
+  CREATE_PLAYER_SUCCESS,
+  CREATE_PLAYER_FAIL,
+  POLL_LOBBY_SUCCESS,
+  POLL_LOBBY_FAIL,
+  SET_COUNTDOWN,
 } from './actionTypes';
 
 const initialState = {
@@ -10,6 +15,7 @@ const initialState = {
   name: '',
   playerCount: 1,
   maxPlayers: 6,
+  countdownTime: 5,
   question: '',
   answer: -1,
   choices: [],
@@ -26,6 +32,30 @@ const reducerMap = {
     return {
       ...state,
       name: color + ' ' + animal,
+    };
+  },
+  [CREATE_PLAYER_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      id: action.id,
+    };
+  },
+  [CREATE_PLAYER_FAIL]: (state) => {
+    return state;
+  },
+  [POLL_LOBBY_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      playerCount: action.playerCount,
+    };
+  },
+  [POLL_LOBBY_FAIL]: (state) => {
+    return state;
+  },
+  [SET_COUNTDOWN]: (state, action) => {
+    return {
+      ...state,
+      countdownTime: action.time,
     };
   },
 };
