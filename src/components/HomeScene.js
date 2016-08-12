@@ -1,5 +1,3 @@
-// example presentational component
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -7,19 +5,15 @@ import {
   View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Button } from 'react-native-material-design';
 import { COLORS } from '../constants';
 
-export default class SplashScene extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      Actions.home();
-    }, 1000);
-  }
-
+export default class HomeScene extends Component {
+  // JS can be injected into JSX using {}, typically to specify props
   render() {
     return (
       <View style={styles.view}>
-        <Text style={styles.label}>Eventbrite</Text>
+        <Button text="Join" raised={true} onPress={() => this.props.join()}/>
       </View>
     );
   }
@@ -30,10 +24,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.THEME,
-  },
-  label: {
-    color: COLORS.WHITE,
-    fontSize: 24,
   },
 });

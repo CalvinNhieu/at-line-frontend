@@ -4,6 +4,45 @@ import { StyleSheet } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import { COLORS } from '../constants';
 import SplashScene from '../components/SplashScene';
+import Home from '../containers/Home';
+
+// Actions.create() creates navigation actions (e.g. Actions.home())
+// App's entry point is defined here with `initial` prop
+const scenes = Actions.create(
+  <Scene key='root'>
+    <Scene
+      key='splash'
+      component={SplashScene}
+      hideNavBar={true}
+    />
+    <Scene
+      key='home'
+      initial={true}
+      component={Home}
+    />
+  </Scene>
+);
+
+class App extends Component {
+
+  /**
+  * - all `React.Component`s require a render() method
+  * - the render method must return a single parent React.Component
+  * - `React.Component`s can be written in JSX
+  */
+  render() {
+    return (
+      <Router
+        scenes={scenes}
+        navigationBarStyle={styles.navBar}
+        renderLeftButton={() => null}
+        renderRightButton={() => null}
+        titleStyle={styles.title}
+        hideNavBar={false}
+      />
+    );
+  }
+}
 
 // define CSS styles to supply as the `style` prop to a React.Component
 const styles = StyleSheet.create({
@@ -13,34 +52,10 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.WHITE,
   },
+  backButton: {
+    color: COLORS.WHITE,
+  },
 });
-
-// Actions.create() creates navigation actions (e.g. Actions.splash())
-const scenes = Actions.create(
-  <Scene key='root'>
-    <Scene
-      key='splash'
-      initial={true}
-      component={SplashScene}
-      hideNavBar={true}
-    />
-  </Scene>
-);
-
-class App extends Component {
-  render() {
-    return (
-      <Router
-        scenes={scenes}
-        navigationBarStyle={styles.navBar}
-        renderBackButton={() => null}
-        renderRightButton={() => null}
-        titleStyle={styles.title}
-        hideNavBar={false}
-      />
-    );
-  }
-}
 
 /** @param
 * mapStateToProps: a function that maps the app state to props

@@ -1,3 +1,5 @@
+// import w/ destructure operation (i.e. {}) imports `export`
+// import w/o destructure operation imports `export default`
 import React, { Component } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
