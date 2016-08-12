@@ -27,7 +27,7 @@ persistStore(
   store,
   {
     storage: AsyncStorage,
-    blacklist: ['playeCount', 'countdownTime', 'question', 'answer', 'choices', 'timeUp'],
+    blacklist: ['playerCount', 'countdownTime', 'question', 'answer', 'choices', 'timeUp'],
   },
   () => {
     // store.dispatch(appReady());

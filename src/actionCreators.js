@@ -8,6 +8,8 @@ import {
   SET_CHOICE,
   PICK_CHOICE_SUCCESS,
   PICK_CHOICE_FAIL,
+  FETCH_QUESTION_SUCCESS,
+  FETCH_QUESTION_FAIL,
 } from './actionTypes';
 import { Actions } from 'react-native-router-flux';
 
@@ -127,5 +129,25 @@ export function pickChocieSuccess() {
 export function pickChocieFail() {
   return {
     type: PICK_CHOICE_FAIL,
+  };
+}
+
+export function fetchQuestion() {
+  return function(dispatch, getState) {
+    // hit questions endpoint
+    // if has next question: dispatch(fetchQuestionSuccess)
+  };
+}
+
+export function fetchQuestionSuccess(data) {
+  return {
+    type: FETCH_QUESTION_SUCCESS,
+    // populate state question, answer...
+  };
+}
+
+export function fetchQuestionFail() {
+  return {
+    type: FETCH_QUESTION_FAIL,
   };
 }

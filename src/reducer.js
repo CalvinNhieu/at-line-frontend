@@ -10,6 +10,8 @@ import {
   SET_CHOICE,
   PICK_CHOICE_SUCCESS,
   PICK_CHOICE_FAIL,
+  FETCH_QUESTION_SUCCESS,
+  FETCH_QUESTION_FAIL,
 } from './actionTypes';
 
 const initialState = {
@@ -24,7 +26,16 @@ const initialState = {
   choices: ['California', 'Canada', 'Kazhakstan', 'Atlantic Ocean'],
   choice: -1,
   timeUp: false,
-  leaderboard: [],
+  leaderboard: [
+    {
+      name: 'Golden Capybara',
+      score: '5',
+    },
+    {
+      name: 'Crimson Wolf',
+      score: '4',
+    },
+  ],
   prize: '',
 };
 
@@ -72,6 +83,17 @@ const reducerMap = {
     return state;
   },
   [PICK_CHOICE_FAIL]: (state) => {
+    return state;
+  },
+  [FETCH_QUESTION_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      question: action.question,
+      choices: action.choices,
+      choice: action.choice,
+    };
+  },
+  [FETCH_QUESTION_FAIL]: (state) => {
     return state;
   },
 };
