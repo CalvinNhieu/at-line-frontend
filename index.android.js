@@ -1,16 +1,22 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
+import rootReducer from './src/reducer';
+
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+
+const logger = createLogger();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk, logger),
+);
 
 class AtLine extends Component {
   render() {
