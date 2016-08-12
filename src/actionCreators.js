@@ -5,11 +5,13 @@ import {
   POLL_LOBBY_SUCCESS,
   POLL_LOBBY_FAIL,
   SET_COUNTDOWN,
+  FETCH_QUESTION_SUCCESS,
+  FETCH_QUESTION_FAIL,
   SET_CHOICE,
   PICK_CHOICE_SUCCESS,
   PICK_CHOICE_FAIL,
-  FETCH_QUESTION_SUCCESS,
-  FETCH_QUESTION_FAIL,
+  SET_ANSWER,
+  GET_RESULTS_FAIL,
 } from './actionTypes';
 import { Actions } from 'react-native-router-flux';
 
@@ -106,32 +108,6 @@ export function countdown(time, callback) {
   };
 }
 
-export function setChoice(choice) {
-  return {
-    type: SET_CHOICE,
-    choice: choice,
-  };
-}
-
-export function pickChoice(choice) {
-  return function(dispatch) {
-    dispatch(setChoice(choice));
-    // hit answer endpoint with player's choice, nothing to handle?
-  };
-}
-
-export function pickChocieSuccess() {
-  return {
-    type: PICK_CHOICE_SUCCESS,
-  };
-}
-
-export function pickChocieFail() {
-  return {
-    type: PICK_CHOICE_FAIL,
-  };
-}
-
 export function fetchQuestion() {
   return function(dispatch, getState) {
     // hit questions endpoint
@@ -149,5 +125,58 @@ export function fetchQuestionSuccess(data) {
 export function fetchQuestionFail() {
   return {
     type: FETCH_QUESTION_FAIL,
+  };
+}
+
+export function setChoice(choice) {
+  return {
+    type: SET_CHOICE,
+    choice: choice,
+  };
+}
+
+export function pickChoice(choice) {
+  return function(dispatch) {
+    dispatch(setChoice(choice));
+    // hit answer endpoint with player's choice, nothing to handle?
+  };
+}
+
+export function pickChoiceSuccess() {
+  return {
+    type: PICK_CHOICE_SUCCESS,
+  };
+}
+
+export function pickChoiceFail() {
+  return {
+    type: PICK_CHOICE_FAIL,
+  };
+}
+
+export function getResults() {
+  return function(dispatch, getState) {
+    // hit /results/ endpoint
+    // on success dispatch(getResultsSuccess())
+  };
+}
+
+export function getResultsSuccess(data) {
+  return function(dispatch, getState) {
+    // if is_over then Actions.results()
+    // else setAnswer, setTimeout 2 seconds and then Actions.leaderboard()
+  };
+}
+
+export function setAnswer(answer) {
+  return {
+    type: SET_ANSWER,
+    answer: answer,
+  };
+}
+
+export function getResultsFail() {
+  return {
+    type: GET_RESULTS_FAIL,
   };
 }

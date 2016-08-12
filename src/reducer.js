@@ -7,11 +7,13 @@ import {
   POLL_LOBBY_SUCCESS,
   POLL_LOBBY_FAIL,
   SET_COUNTDOWN,
+  FETCH_QUESTION_SUCCESS,
+  FETCH_QUESTION_FAIL,
   SET_CHOICE,
   PICK_CHOICE_SUCCESS,
   PICK_CHOICE_FAIL,
-  FETCH_QUESTION_SUCCESS,
-  FETCH_QUESTION_FAIL,
+  SET_ANSWER,
+  GET_RESULTS_FAIL,
 } from './actionTypes';
 
 const initialState = {
@@ -79,12 +81,6 @@ const reducerMap = {
       choice: action.choice,
     };
   },
-  [PICK_CHOICE_SUCCESS]: (state) => {
-    return state;
-  },
-  [PICK_CHOICE_FAIL]: (state) => {
-    return state;
-  },
   [FETCH_QUESTION_SUCCESS]: (state, action) => {
     return {
       ...state,
@@ -94,6 +90,21 @@ const reducerMap = {
     };
   },
   [FETCH_QUESTION_FAIL]: (state) => {
+    return state;
+  },
+  [PICK_CHOICE_SUCCESS]: (state) => {
+    return state;
+  },
+  [PICK_CHOICE_FAIL]: (state) => {
+    return state;
+  },
+  [SET_ANSWER]: (state, action) => {
+    return {
+      ...state,
+      answer: action.answer,
+    };
+  },
+  [GET_RESULTS_FAIL]: (state) => {
     return state;
   },
 };
