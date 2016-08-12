@@ -5,6 +5,9 @@ import {
   POLL_LOBBY_SUCCESS,
   POLL_LOBBY_FAIL,
   SET_COUNTDOWN,
+  SET_CHOICE,
+  PICK_CHOICE_SUCCESS,
+  PICK_CHOICE_FAIL,
 } from './actionTypes';
 import { Actions } from 'react-native-router-flux';
 
@@ -84,7 +87,7 @@ export function setCountdown(time) {
   };
 }
 
-export function countdown(time) {
+export function countdown(time, callback) {
   return function(dispatch) {
     if (time > 0) {
       let nextTime = time - 1;
@@ -92,11 +95,37 @@ export function countdown(time) {
       setTimeout(() => {
         dispatch(setCountdown(nextTime));
         if (nextTime > 0) {
-          dispatch(countdown(nextTime));
+          dispatch(countdown(nextTime, callback));
         } else {
-          // Actions.question();
+          callback();
         }
       }, 1000);
     }
+  };
+}
+
+export function setChoice(choice) {
+  return {
+    type: SET_CHOICE,
+    choice: choice,
+  };
+}
+
+export function pickChoice(choice) {
+  return function(dispatch) {
+    dispatch(setChoice(choice));
+    // hit answer endpoint with player's choice, nothing to handle?
+  };
+}
+
+export function pickChocieSuccess() {
+  return {
+    type: PICK_CHOICE_SUCCESS,
+  };
+}
+
+export function pickChocieFail() {
+  return {
+    type: PICK_CHOICE_FAIL,
   };
 }

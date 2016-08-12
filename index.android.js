@@ -32,7 +32,7 @@ persistStore(
   () => {
     // store.dispatch(appReady());
   },
-);
+).purgeAll();
 
 // Provider provides the store to all child components
 class AtLine extends Component {

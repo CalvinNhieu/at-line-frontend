@@ -7,6 +7,7 @@ import SplashScene from '../components/SplashScene';
 import Home from '../containers/Home';
 import Lobby from '../containers/Lobby';
 import Countdown from '../containers/Countdown';
+import Question from '../containers/Question';
 
 // Actions.create() creates navigation actions (e.g. Actions.home())
 // App's entry point is defined here with `initial` prop
@@ -32,6 +33,11 @@ const scenes = Actions.create(
       initial={true}
       component={Countdown}
       hideNavBar={true}
+    />
+    <Scene
+      key='question'
+      title='Question'
+      component={Question}
     />
   </Scene>
 );

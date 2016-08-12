@@ -7,6 +7,9 @@ import {
   POLL_LOBBY_SUCCESS,
   POLL_LOBBY_FAIL,
   SET_COUNTDOWN,
+  SET_CHOICE,
+  PICK_CHOICE_SUCCESS,
+  PICK_CHOICE_FAIL,
 } from './actionTypes';
 
 const initialState = {
@@ -15,10 +18,11 @@ const initialState = {
   name: '',
   playerCount: 1,
   maxPlayers: 6,
-  countdownTime: 5,
-  question: '',
+  countdownTime: 3,
+  question: 'Where is the capybara indigenous to?',
   answer: -1,
-  choices: [],
+  choices: ['California', 'Canada', 'Kazhakstan', 'Atlantic Ocean'],
+  choice: -1,
   timeUp: false,
   leaderboard: [],
   prize: '',
@@ -57,6 +61,18 @@ const reducerMap = {
       ...state,
       countdownTime: action.time,
     };
+  },
+  [SET_CHOICE]: (state, action) => {
+    return {
+      ...state,
+      choice: action.choice,
+    };
+  },
+  [PICK_CHOICE_SUCCESS]: (state) => {
+    return state;
+  },
+  [PICK_CHOICE_FAIL]: (state) => {
+    return state;
   },
 };
 
