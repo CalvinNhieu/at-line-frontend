@@ -13,12 +13,15 @@ import {
   View,
 } from 'react-native';
 
+// logs all action dispatches in the console
 const logger = createLogger();
+// init app state
 const store = createStore(
   rootReducer,
   applyMiddleware(thunk, logger),
 );
 
+// Provider provides the store to all child components
 class AtLine extends Component {
   render() {
     return (
