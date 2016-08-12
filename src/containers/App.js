@@ -5,6 +5,7 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import { COLORS } from '../constants';
 import SplashScene from '../components/SplashScene';
 import Home from '../containers/Home';
+import Lobby from '../containers/Lobby';
 
 // Actions.create() creates navigation actions (e.g. Actions.home())
 // App's entry point is defined here with `initial` prop
@@ -17,9 +18,14 @@ const scenes = Actions.create(
     />
     <Scene
       key='home'
-      initial={true}
-      title='Pick a name!'
+      title='At Line'
       component={Home}
+    />
+    <Scene
+      key='lobby'
+      initial={true}
+      title='Lobby'
+      component={Lobby}
     />
   </Scene>
 );

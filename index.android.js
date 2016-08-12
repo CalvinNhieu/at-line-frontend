@@ -29,8 +29,7 @@ persistStore(
     storage: AsyncStorage,
   },
   () => {
-    console.log('rehydrated');
-    store.dispatch(appReady());
+    // store.dispatch(appReady());
   },
 );
 

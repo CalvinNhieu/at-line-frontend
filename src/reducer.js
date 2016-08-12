@@ -1,15 +1,15 @@
 import { COLOR_NAMES, ANIMAL_NAMES } from './constants';
 import { Actions } from 'react-native-router-flux';
 import {
-  APP_READY,
   GENERATE_NAME,
 } from './actionTypes';
 
 const initialState = {
   id: -1,
+  gameId: 1,
   name: '',
   playerCount: 1,
-  maxPlayers: -1,
+  maxPlayers: 6,
   question: '',
   answer: -1,
   choices: [],
@@ -19,10 +19,6 @@ const initialState = {
 };
 
 const reducerMap = {
-  [APP_READY]: (state) => {
-    Actions.home();
-    return state;
-  },
   [GENERATE_NAME]: (state) => {
     let color = COLOR_NAMES[Math.floor(Math.random()*COLOR_NAMES.length)];
     let animal = ANIMAL_NAMES[Math.floor(Math.random()*ANIMAL_NAMES.length)];
