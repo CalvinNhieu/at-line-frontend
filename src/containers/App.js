@@ -16,6 +16,7 @@ const scenes = Actions.create(
   <Scene key='root'>
     <Scene
       key='splash'
+      initial={true}
       component={SplashScene}
       hideNavBar={true}
     />

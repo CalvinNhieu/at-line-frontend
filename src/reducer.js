@@ -52,6 +52,7 @@ const reducerMap = {
     };
   },
   [CREATE_PLAYER_SUCCESS]: (state, action) => {
+    console.log("Create player success");
     return {
       ...state,
       id: action.id,
@@ -60,7 +61,7 @@ const reducerMap = {
   [CREATE_PLAYER_FAIL]: (state) => {
     return state;
   },
-  [POLL_LOBBY_SUCCESS]: (state, action) => {
+  [SET_PLAYER_COUNT]: (state, action) => {
     return {
       ...state,
       playerCount: action.playerCount,

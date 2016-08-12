@@ -2,7 +2,7 @@ import {
   GENERATE_NAME,
   CREATE_PLAYER_SUCCESS,
   CREATE_PLAYER_FAIL,
-  POLL_LOBBY_SUCCESS,
+  SET_PLAYER_COUNT,
   POLL_LOBBY_FAIL,
   SET_COUNTDOWN,
   FETCH_QUESTION_SUCCESS,
@@ -19,7 +19,9 @@ export function appReady() {
   return function(dispatch, getState) {
     let state = getState();
 
+    console.log("App Ready");
     if (state.id === -1) {
+      console.log("Creating player");
       dispatch(createPlayer());
     }
     dispatch(generateName());
@@ -31,6 +33,28 @@ export function createPlayer() {
   return function(dispatch, getState) {
     // hit create player endpoint
     // on success: set player id
+    console.log("In create player");
+      let state = getState();
+      let url = 'https://fast-headland-47604.herokuapp.com/create_player';
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        console.log("Got res",res);
+          return res.json();
+      })
+      .then((json) => {
+        console.log("Json Response ");
+        let player_id = json[0]['pk'];
+
+        dispatch(createPlayerSuccess(player_id));
+      })
+      .catch(err => console.log(err));
   };
 }
 
@@ -68,6 +92,26 @@ export function join() {
 
 export function pollLobby() {
   return function(dispatch, getState) {
+    let state = getState();
+    let url = 'https://fast-headland-47604.herokuapp.com/session';
+
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        'session_id': state.session_id
+      }
+    })
+    .then((res) =>{
+      console.log("Got Res");
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(pollLobbySuccess(json));
+    })
+    .catch(err => console.log(err));
     // hit 'players in room'/'is room ready' endpoint
     // CHECK HERE IF playerCount === maxPlayerCount to determine ready?? or use ready field
     // on success:not ready dispatch(pollLobbySuccess), dispatch(pollLobby)
@@ -78,9 +122,22 @@ export function pollLobby() {
 
 // this will receive a session (isReady and playerCount??)
 export function pollLobbySuccess(data) {
+  return function(dispatch, getState) {
+    let state = getState();
+    dispatch(setPlayerCount(data['player_count']));
+
+    if (data.playerCount === state.maxPlayers ) {
+      Actions.countdown();
+    } else {
+      dispatch(pollLobby());
+    }
+  }
+}
+
+export function setPlayerCount(playerCount) {
   return {
-    type: POLL_LOBBY_SUCCESS,
-    playerCount: data.playerCount,
+    type: SET_PLAYER_COUNT,
+    playerCount: playerCount,
   };
 }
 
