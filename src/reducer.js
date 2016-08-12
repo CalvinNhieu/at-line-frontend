@@ -1,4 +1,15 @@
-const initialState = {};
+const initialState = {
+  id: -1,
+  name: '',
+  playerCount: 1,
+  maxPlayers: -1,
+  question: '',
+  answer: -1,
+  choices: [],
+  timeUp: false,
+  leaderboard: [],
+  prize: '',
+};
 const reducerMap = {};
 
 /** the reducer is...
@@ -8,7 +19,7 @@ const reducerMap = {};
 */
 export default function rootReducer(state = initialState, action) {
   if (reducerMap[action.type]) {
-      return reducerMap[action.type](state, action);
+    return reducerMap[action.type](state, action);
   } else {
     return state;
   }
