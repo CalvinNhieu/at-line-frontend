@@ -9,6 +9,7 @@ import Lobby from '../containers/Lobby';
 import Countdown from '../containers/Countdown';
 import Question from '../containers/Question';
 import Leaderboard from '../containers/Leaderboard';
+import Results from '../containers/Results';
 
 // Actions.create() creates navigation actions (e.g. Actions.home())
 // App's entry point is defined here with `initial` prop
@@ -38,13 +39,18 @@ const scenes = Actions.create(
     <Scene
       key='question'
       title='Question'
-      initial={true}
       component={Question}
     />
     <Scene
       key='leaderboard'
       title='Leaderboard'
       component={Leaderboard}
+    />
+    <Scene
+      key='results'
+      title='Results'
+      initial={true}
+      component={Results}
     />
   </Scene>
 );
